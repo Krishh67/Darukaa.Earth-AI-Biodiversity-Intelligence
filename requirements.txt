@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+pydantic
+requests
+google-genai
+python-dotenv
+faiss-cpu
+rank_bm25
+sentence-transformers
+numpy
+pystac-client
+planetary-computer
+rasterio
+

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darukaa.Earth - AI Biodiversity Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50 font-sans h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-green-700 text-white shadow-md p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold tracking-wider"><i class="fas fa-leaf mr-2"></i>Darukaa.Earth</h1>
+                <p class="text-sm text-green-200">AI Biodiversity Intelligence</p>
+            </div>
+            
+            <div class="flex items-center space-x-2 bg-green-800 p-2 rounded-lg">
+                <i class="fas fa-map-marker-alt text-green-300"></i>
+                <select id="location-select" class="bg-green-800 text-white border-none outline-none text-sm">
+                    <option value="">No Location Selected</option>
+                    <option value="19.0760,72.8777">Mumbai, India (Degraded Urban)</option>
+                    <option value="-3.4653,-62.2159">Amazon Rainforest, Brazil</option>
+                    <option value="51.5074,-0.1278">London, UK</option>
+                    <option value="custom">Custom Lat/Long...</option>
+                </select>
+                <div id="custom-coords" class="hidden flex space-x-2 ml-2">
+                    <input type="number" id="custom-lat" placeholder="Lat" class="w-20 px-2 py-1 text-black rounded text-sm">
+                    <input type="number" id="custom-lon" placeholder="Lon" class="w-20 px-2 py-1 text-black rounded text-sm">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 container mx-auto p-4 flex gap-6 overflow-hidden">
+        
+        <!-- Chat Column -->
+        <section class="w-1/2 flex flex-col bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+            <div class="bg-gray-100 p-3 border-b border-gray-200 font-semibold text-gray-700 flex justify-between">
+                <span>Intelligence Assistant</span>
+                <span id="session-badge" class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">New Session</span>
+            </div>
+            
+            <div id="chat-history" class="flex-1 overflow-y-auto p-4 space-y-4">
+                <!-- Welcome Message -->
+                <div class="flex items-start">
+                    <div class="bg-green-100 text-green-900 rounded-lg p-3 max-w-[80%] shadow-sm">
+                        Hello! I am the Darukaa.Earth Biodiversity Assistant. Select a location above and ask me how to improve biodiversity, assess soil health, or restore a habitat.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="p-4 border-t border-gray-200 bg-gray-50">
+                <form id="chat-form" class="flex space-x-2">
+                    <input type="text" id="chat-input" placeholder="E.g., How can I improve biodiversity in this degraded land?" class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white rounded-lg px-6 py-2 transition-colors flex items-center">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Insights Column -->
+        <section class="w-1/2 flex flex-col space-y-6 overflow-y-auto pr-2 pb-10" id="insights-panel">
+            
+            <!-- Environmental Metrics -->
+            <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-5">
+                <h2 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2"><i class="fas fa-globe-americas mr-2 text-blue-500"></i>Detected Environmental State</h2>
+                <div id="env-metrics" class="grid grid-cols-2 gap-4">
+                    <div class="text-sm text-gray-500 italic">No data yet. Send a query with a location to analyze.</div>
+                </div>
+            </div>
+
+            <!-- Actionable Recommendation -->
+            <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-5 hidden" id="recommendation-panel">
+                <h2 class="text-lg font-bold text-green-700 mb-4 border-b pb-2"><i class="fas fa-seedling mr-2"></i>Actionable Recommendation</h2>
+                
+                <div class="mb-4">
+                    <p id="rec-text" class="text-gray-800 font-medium text-lg leading-relaxed"></p>
+                </div>
+                
+                <div class="flex space-x-4 mb-4">
+                    <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded flex items-center">
+                        <i class="fas fa-clock mr-1"></i> <span id="rec-time"></span>
+                    </span>
+                    <span class="bg-purple-100 text-purple-800 text-xs font-semibold px-2.5 py-0.5 rounded flex items-center">
+                        <i class="fas fa-chart-line mr-1"></i> Confidence: <span id="rec-conf"></span>
+                    </span>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="text-sm font-bold text-gray-700 uppercase tracking-wide mb-1">Impacted Metrics</h3>
+                    <div id="rec-metrics" class="flex flex-wrap gap-2"></div>
+                </div>
+                
+                <div class="bg-gray-50 rounded p-4 border border-gray-200">
+                    <h3 class="text-sm font-bold text-gray-700 uppercase tracking-wide mb-2"><i class="fas fa-microscope mr-1"></i>Scientific Reasoning</h3>
+                    <p id="rec-reasoning" class="text-sm text-gray-600"></p>
+                </div>
+            </div>
+            
+            <!-- Verification Node -->
+            <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-5 hidden" id="verification-panel">
+                <h2 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2"><i class="fas fa-shield-alt mr-2 text-indigo-500"></i>Verification Node</h2>
+                <div id="verification-status" class="flex items-center space-x-2 mb-2"></div>
+                <ul id="verification-flags" class="list-disc pl-5 text-sm text-gray-600 space-y-1"></ul>
+            </div>
+
+            <!-- Scientific Evidence -->
+            <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-5 hidden" id="evidence-panel">
+                <h2 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2"><i class="fas fa-book mr-2 text-yellow-600"></i>Scientific Evidence (RAG)</h2>
+                <div id="evidence-list" class="space-y-3"></div>
+            </div>
+            
+        </section>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl p-8 flex flex-col items-center shadow-2xl">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-green-700 mb-4"></div>
+            <p class="text-lg font-semibold text-gray-800">Processing Biodiversity Intelligence...</p>
+            <p class="text-sm text-gray-500 mt-2 text-center" id="loading-text">Extracting coordinates > Retrieving FAISS+BM25 > Fetching SoilGrids > Running RRF > LLM Reasoning > Verifying claims</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
