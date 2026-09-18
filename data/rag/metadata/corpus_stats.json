@@ -1,0 +1,11 @@
+{
+    "pdfs_processed": 11,
+    "pages_processed": 2168,
+    "total_chunks": 4976,
+    "chunks_per_document": 452.3636363636364,
+    "average_chunk_length_chars": 1950.4141881028938,
+    "minimum_chunk_length_chars": 504,
+    "maximum_chunk_length_chars": 6405,
+    "chunks_with_section": 4976,
+    "chunks_with_env_vars": 3577
+}
