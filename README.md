@@ -7,14 +7,18 @@ https://github.com/user-attachments/assets/72f2aff1-76e6-4407-806b-489b8d55f996
 This is a production-quality hackathon prototype for the Darukaa.Earth AI Biodiversity Challenge. It behaves as an AI Environmental Scientist, integrating Conversational AI, Scientific RAG (FAISS + BM25 + RRF), structured environmental data fetching (SoilGrids, Open-Meteo, ESA WorldCover), Multi-Metric Reasoning, and strict Verification into a unified pipeline.
 
 ## Architecture
+<img width="1463" height="605" alt="image" src="https://github.com/user-attachments/assets/251711f3-bec1-41a9-b97e-163ed66ff5bf" />
+
 1. **Intake & Context Manager (Groq)**: A fast frontier model acts as the front-line agent. It intercepts user queries, evaluates conversation context, and asks deep, professional clarification questions if operational details are missing. Once enough context is gathered, it generates multiple optimized queries for the RAG database.
 2. **Environmental API Layer**: Automatically fetches live metrics based on coordinates:
    - **SoilGrids (ISRIC)**: Soil pH, Organic Carbon, Nitrogen, Bulk Density.
    - **Open-Meteo**: Historical & forecasted climate data.
    - **Planetary Computer (ESA WorldCover)**: STAC API and raster reading for land cover classification.
 3. **Hybrid RAG Pipeline**: Combines dense semantic search (FAISS + `gemini-embedding-2`) with sparse lexical search (BM25). Results are fused using Reciprocal Rank Fusion (RRF) and reranked using a HuggingFace Cross-Encoder.
-4. **Reasoning Engine (Gemini 3.5 Flash)**: Synthesizes environmental data and RAG evidence, explicitly connecting 3+ environmental variables to generate multi-metric, heavily cited recommendations.
-5. **Verification Node**: A secondary LLM pass acts as a silent protector, strictly verifying the primary LLM's claims against the retrieved evidence and halting hallucinations.
+   <img width="1436" height="412" alt="image" src="https://github.com/user-attachments/assets/1200c371-521f-4dca-bd3f-541a9ea18025" />
+
+5. **Reasoning Engine (Gemini 3.5 Flash)**: Synthesizes environmental data and RAG evidence, explicitly connecting 3+ environmental variables to generate multi-metric, heavily cited recommendations.
+6. **Verification Node**: A secondary LLM pass acts as a silent protector, strictly verifying the primary LLM's claims against the retrieved evidence and halting hallucinations.
 
 ## Database & Schema
 - **Vector DB**: FAISS (`data/rag/index/faiss.index`) combined with a mapped JSON lookup array.
