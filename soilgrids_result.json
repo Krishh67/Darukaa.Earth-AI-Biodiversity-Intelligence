@@ -1,0 +1,23 @@
+{
+    "location": {
+        "latitude": 19.076,
+        "longitude": 72.8777
+    },
+    "soil_location": {
+        "latitude": 19.034333,
+        "longitude": 72.91379,
+        "distance_from_requested_location_km": 5.988
+    },
+    "soil": {
+        "soc_g_kg": 33.3,
+        "ph": 5.8,
+        "clay_percent": 34.3,
+        "sand_percent": 37.0,
+        "silt_percent": 28.7,
+        "nitrogen_g_kg": 2.44,
+        "bulk_density_kg_dm3": 1.35
+    },
+    "availability": "nearby",
+    "source": "SoilGrids",
+    "depth": "0-5 cm"
+}

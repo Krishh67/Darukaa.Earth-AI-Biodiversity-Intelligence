@@ -56,7 +56,7 @@ def get_embeddings_batch(batch_chunks):
         # Create a Content object format for independent embeddings
         contents.append({"parts": [{"text": formatted_content}]})
     
-    max_retries = 5
+    max_retries = 10
     for attempt in range(max_retries):
         try:
             result = client.models.embed_content(

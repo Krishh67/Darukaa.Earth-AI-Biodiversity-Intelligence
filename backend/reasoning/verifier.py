@@ -11,8 +11,8 @@ def verify_claims(llm_output, environment, evidence):
     for i, ev in enumerate(evidence):
         evidence_text += f"\n[Source {i+1}]: {ev.get('document_title', 'Unknown')} - {ev.get('text', '')}\n"
         
-    prompt = f"""You are the Darukaa.Earth Verification Node.
-Your job is to strictly verify the claims made in the LLM's biodiversity recommendation against the actual provided evidence and environmental data.
+    prompt = f"""You are a strict, objective AI Verification Node checking a biodiversity recommendation.
+Your ONLY job is to verify the claims against the provided evidence and environmental state.
 
 ENVIRONMENTAL STATE:
 {json.dumps(environment, indent=2)}
@@ -24,24 +24,24 @@ RECOMMENDATION TO VERIFY:
 {json.dumps(llm_output, indent=2)}
 
 INSTRUCTIONS:
-1. Are the environmental values cited in the reasoning actually present in the Environmental State?
-2. Are the scientific claims actually supported by the Scientific Evidence?
-3. Are there any fabricated statistics?
-4. Is the recommendation consistent with the evidence?
-
-If verification fails, output revised_answer revising the incorrect parts. Otherwise leave it null.
+1. Verify if the numbers, metrics, and claims in the recommendation are actually supported by the Scientific Evidence and Environmental State.
+2. DO NOT output your internal thinking or chain-of-thought in the final JSON response.
+3. If perfectly supported, set 'is_supported' to True and leave 'flags' empty.
+4. If there is a contradiction or hallucination, set 'is_supported' to False.
+5. In 'flags', provide ONLY 1 or 2 extremely brief, user-friendly bullet points explaining what was corrected (e.g., "Corrected the rainfall statistic to match local data." or "Removed unverified claims about species growth."). Do not dump raw analysis.
+6. If it fails verification, output a 'revised_answer' fixing the errors.
 """
 
     response_schema = {
         "type": "OBJECT",
         "properties": {
-            "is_supported": {"type": "BOOLEAN", "description": "True if all claims are supported"},
+            "is_supported": {"type": "BOOLEAN", "description": "True if all claims are accurate and supported. False otherwise."},
             "flags": {
                 "type": "ARRAY",
                 "items": {"type": "STRING"},
-                "description": "List of unsupported claims, fabricated numbers, or contradictions. Empty if perfectly supported."
+                "description": "If False, an extremely short, user-friendly summary of what was corrected (max 1 sentence per flag). Empty if True."
             },
-            "revised_answer": {"type": "STRING", "description": "A corrected, safe version of the reasoning if it failed verification. Null if it passed."}
+            "revised_answer": {"type": "STRING", "description": "The completely revised recommendation text if it failed verification. Null if passed."}
         },
         "required": ["is_supported", "flags"]
     }

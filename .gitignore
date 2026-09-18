@@ -26,3 +26,5 @@ a.py
 .vscode/
 .idea/
 .DS_Store
+
+*.mp4 

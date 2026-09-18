@@ -1,0 +1,15 @@
+{
+  "created_at": "2026-09-19T00:23:04.478675",
+  "history": [
+    {
+      "role": "user",
+      "content": "I farm monoculture wheat in a semi-arid region. My soil organic carbon has dropped to critically low levels (0.3%) and water availability is poor. How can I restore soil health and improve biodiversity while maintaining agricultural productivity?"
+    },
+    {
+      "role": "assistant",
+      "content": "1. Introduce diverse crop rotations by integrating legume break-crops (such as field peas, faba beans, chickpeas, lentils, or lupins) prior to planting wheat to boost nitrogen availability, enhance phosphorus cycling via root exudates and mycorrhizal activity, and increase water-use efficiency. 2. Implement conservation tillage practices or residue management to conserve soil moisture and reduce surface runoff under semi-arid conditions. 3. Address drivers of degradation by preserving existing carbon stocks and minimizing soil disturbance."
+    }
+  ],
+  "initialized": true,
+  "updated_at": "2026-09-19T00:24:18.364275"
+}
