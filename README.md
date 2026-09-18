@@ -1,5 +1,9 @@
 # Darukaa.Earth AI Biodiversity Intelligence
 
+
+https://github.com/user-attachments/assets/72f2aff1-76e6-4407-806b-489b8d55f996
+
+
 This is a production-quality hackathon prototype for the Darukaa.Earth AI Biodiversity Challenge. It behaves as an AI Environmental Scientist, integrating Conversational AI, Scientific RAG (FAISS + BM25 + RRF), structured environmental data fetching (SoilGrids, Open-Meteo, ESA WorldCover), Multi-Metric Reasoning, and strict Verification into a unified pipeline.
 
 ## Architecture
@@ -25,7 +29,6 @@ Ensure you have Python 3.9+ installed. Create a `.env` file in the root director
 ```env
 GEMINI_API_KEY=your_gemini_key_here  # Get from: https://aistudio.google.com/api-keys
 GROQ_API_KEY=your_groq_key_here      # Get from: https://console.groq.com/keys
-HF_TOKEN=your_huggingface_token_here  # Optional: For higher rate limits when downloading the Cross-Encoder model
 ```
 
 ### 2. Install Dependencies
@@ -45,17 +48,6 @@ Navigate to the `frontend/` folder in your file explorer and double-click `index
 ## CI/CD & Deployment Notes
 Given the scope of the hackathon, this prototype is designed for robust local execution. The backend can easily be containerized via Docker (using `uvicorn`) and deployed to services like Google Cloud Run or AWS Fargate. The frontend is vanilla HTML/JS/Tailwind and can be hosted statically on Vercel or GitHub Pages. The FAISS indices are small enough to be bundled in the container, but would be migrated to Pinecone or Weaviate for production scaling.
 
-## How to Demo
-1. **The Clarification Flex**: Start a New Chat and type: *"Biodiversity is declining on my land. What should I do?"* The Groq Intake manager will immediately intercept this vague query and ask a professional follow-up question.
-2. **The Multi-Metric AI Scientist Flex**: In the top navigation bar, select **Mumbai, India**. Open the **Structured JSON Input** box and paste:
-   ```json
-   {
-     "soil": { "soc": 0.3, "ph": 6.5 },
-     "climate": { "precipitation_annual_sum": 300 },
-     "land_cover": { "class_name": "Monoculture wheat" }
-   }
-   ```
-   Then send: *"I farm monoculture wheat in a semi-arid region. My soil organic carbon has dropped to critically low levels and water availability is poor. How can I restore soil health and improve biodiversity?"*
-   The system will extract your metrics, fetch RAG data, and output a highly detailed, referenced action plan spanning multiple variables!
+
 
 *Note: The raw PDF sources used for RAG are available here: https://drive.google.com/drive/folders/1tEAK9_1C3ixIEyigld873FE6Rga205pL?usp=sharing*
