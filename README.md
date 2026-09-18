@@ -30,3 +30,4 @@ This is a production-quality hackathon prototype for the Darukaa.Earth AI Biodiv
 2. Ask a question like: *"How can I improve biodiversity in this degraded urban land?"*
 3. The system will extract your coordinates, fetch soil properties, retrieve relevant RAG chunks, and stream the fully reasoned recommendation!
 
+Datasource used in embedding - https://drive.google.com/drive/folders/1tEAK9_1C3ixIEyigld873FE6Rga205pL?usp=sharing
