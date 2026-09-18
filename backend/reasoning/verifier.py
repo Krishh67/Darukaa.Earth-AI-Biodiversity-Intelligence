@@ -5,7 +5,7 @@ from google.genai import types
 client = genai.Client()
 
 def verify_claims(llm_output, environment, evidence):
-    model_name = "gemini-2.5-flash"
+    model_name = "gemini-3.5-flash-lite"
     
     evidence_text = ""
     for i, ev in enumerate(evidence):
